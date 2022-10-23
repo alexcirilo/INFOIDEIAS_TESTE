@@ -15,16 +15,14 @@ class Funcoes
 
      * */
     public function SeculoAno(int $ano): int {
-        
+        if($ano < 0){
+            echo "Inválido";
+        }else{
+            $sec = ceil($ano / 100);
+            return $sec;
+        }
     }
 
-    
-	
-	
-	
-	
-	
-	
 	
 	/*
 
@@ -36,16 +34,23 @@ class Funcoes
     Número = 29 resposta = 23
 
      * */
-    public function PrimoAnterior(int $numero): int {
-        
-    }
-
-
-
-
-
-
-
+    public function PrimoAnterior(int $numero): int
+    {
+    	$valor = $numero -1;
+    	$i =1;
+    	for($valor; $valor > 2; $valor--){
+		   $div =0;
+	        for($i = 2; $i < $valor ; $i++){
+	            if($valor % $i == 0){
+	                $div += 1;
+	            }
+	        }
+	
+	        if($div == 0 && $valor !=0 && $valor !=1){
+	            return $valor;
+	        }
+	    }
+	}
 
 
 
@@ -65,15 +70,22 @@ class Funcoes
 	resposta = 25
 
      * */
-    public function SegundoMaior(array $arr): int {
-        
+    public function SegundoMaior(array $arr): int
+    {
+     $maiorValor =0;
+     $segundoMaiorValor = 0;
+        foreach($arr as $key=>$item){
+        	foreach($item as $key2=> $valor){
+        		if($valor > $maiorValor){
+        			$segundoMaiorValor = $maiorValor;
+        			$maiorValor = $valor;
+        		}else if($valor > $segundoMaiorValor){
+        			$segundoMaiorValor = $valor;
+        		}
+        	}
+        }
+        return $segundoMaiorValor;
     }
-	
-	
-	
-	
-	
-	
 	
 
     /*
@@ -105,8 +117,29 @@ class Funcoes
     [3, 5, 67, 98, 3] true
 
      * */
-    
-	public function SequenciaCrescente(array $arr): boolean {
-        
+
+    public static function SequenciaCrescente(array $arr): bool
+    {
+
+
+        for ($i = 0; $i < count($arr); $i++) {
+            $arrSemValor = $arr;
+            array_splice($arrSemValor, $i, 1);
+
+            $crescente = Funcoes::OrdemCrescente($arrSemValor);
+            if ($crescente){
+            	return true;
+            }
+        }
+
+        return  false;
     }
+    private static function OrdemCrescente(array $itens)
+    {
+        for ($i = 1; $i < count($itens); $i++) {
+            if ($itens[$i - 1] >= $itens[$i]) return false;
+        }
+        return true;
+    }
+
 }
